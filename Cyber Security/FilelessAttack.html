@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fileless Attack — Awareness & Prevention</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/fileless.css">
+</head>
+<body>
+  <div class="container py-4">
+    <nav class="d-flex align-items-center justify-content-between mb-2">
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-dark text-light p-2"><i class="bi bi-shield-lock-fill me-1"></i></span>
+        <div>
+          <div class="navbar-brand mb-0"><strong>Fileless Attack</strong></div>
+          <small class="muted">Awareness · Detection · Prevention</small>
+        </div>
+      </div>
+      <div>
+        <a class="btn btn-sm btn-outline-light me-2" href="#overview">Overview</a>
+        <a class="btn btn-sm btn-outline-light me-2" href="#types">Types</a>
+        <a class="btn btn-sm btn-primary" href="#prevention">Prevention</a>
+      </div>
+    </nav>
+
+    <section class="hero p-3">
+      <div class="flex-grow-1">
+        <span class="pill">Cybersecurity · Threat intel</span>
+        <h1 class="mt-3 mb-2">Fileless Attacks — <span class="accent">Stealthy</span>, Memory-Resident Threats</h1>
+        <p class="muted">Fileless attacks execute malicious code in memory using legitimate system tools such as PowerShell, WMI, macros, or living-off-the-land binaries. They leave minimal forensic traces on disk, making detection harder for legacy AV.</p>
+
+        <div class="mt-4 row g-3">
+          <div class="col-md-4">
+            <div class="glass-card">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-memory type-icon accent-2"></i>
+                <div>
+                  <h6 class="mb-1">Memory-only execution</h6>
+                  <p class="muted small mb-0">Runs in RAM—no files written to disk.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="glass-card">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-pencil-square type-icon accent"></i>
+                <div>
+                  <h6 class="mb-1">Script & macro abuse</h6>
+                  <p class="muted small mb-0">Malicious macros or scripts execute code without dropping executables.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="glass-card">
+              <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-gear type-icon" style="color:#ffd27a"></i>
+                <div>
+                  <h6 class="mb-1">Living off the land</h6>
+                  <p class="muted small mb-0">Attackers reuse trusted system utilities (LOTL / LOLBins).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ms-3 d-none d-md-block" style="min-width:320px;">
+        <div class="glass-card text-center">
+          <img src="img/fileless.png" alt="Hero placeholder" class="img-fluid rounded mb-3" style="max-height:180px; object-fit:cover">
+          <h5 class="mb-1">Invisible footprints</h5>
+          <p class="muted small mb-2">Fileless attacks minimize disk artifacts and leverage trusted processes.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="row mt-4">
+      <main class="col-lg-8">
+
+        <article id="overview" class="mb-4">
+          <h3 class="section-title">Overview</h3>
+          <p class="muted">Fileless attacks are increasingly favored by sophisticated adversaries because they reduce forensic traces and can bypass many signature-based defenses. These techniques rely on legitimate system features and scripting engines, making behavior-based detection essential.</p>
+
+          <div class="row mt-3">
+            <div class="col-sm-6 mb-3">
+              <div class="p-3 glass-card">
+                <h6>Common entry vectors</h6>
+                <ul class="muted mb-0">
+                  <li>Phishing documents with macros</li>
+                  <li>Compromised credentials and remote execution</li>
+                  <li>Exploitation of vulnerable services and exposed endpoints</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-3">
+              <div class="p-3 glass-card">
+                <h6>Why they're dangerous</h6>
+                <ul class="muted mb-0">
+                  <li>Minimal disk evidence for forensics</li>
+                  <li>Can run with elevated privileges</li>
+                  <li>Often executed by trusted system binaries</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="how" class="mb-4">
+          <h3 class="section-title">How it works — simplified flow</h3>
+          <div class="timeline mt-3">
+            <div class="mb-3">
+              <strong>1. Initial access</strong>
+              <div class="muted small">Phishing, exploit, or stolen credentials.</div>
+            </div>
+            <div class="mb-3">
+              <strong>2. In-memory execution</strong>
+              <div class="muted small">Malicious script or payload runs in memory (PowerShell, WMI, macros).</div>
+            </div>
+            <div class="mb-3">
+              <strong>3. Persistence</strong>
+              <div class="muted small">Registry keys, scheduled tasks, or living processes to survive reboots.</div>
+            </div>
+            <div class="mb-3">
+              <strong>4. Objective</strong>
+              <div class="muted small">Data exfiltration, lateral movement, or ransomware activation.</div>
+            </div>
+          </div>
+
+        <article id="detection" class="mb-4">
+          <h3 class="section-title">Detection challenges & signs</h3>
+          <ul class="muted">
+            <li>Unusual PowerShell or script activity at odd hours.</li>
+            <li>Non-browser processes making external network connections.</li>
+            <li>Processes launched by unexpected parents (Office apps spawning PowerShell).</li>
+            <li>Activity that exists only in memory with no file artifacts.</li>
+          </ul>
+
+          <div class="mt-3">
+            <h6>Helpful tools</h6>
+            <p class="muted small">EDR, SIEM with script auditing, application whitelisting, and behavior-based detections are key. Traditional AV alone is insufficient.</p>
+          </div>
+        </article>
+
+        <!-- Combined Prevention & Best Practices -->
+        <article id="prevention" class="mb-4">
+          <h3 class="section-title">Prevention & Best Practices</h3>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="glass-card mb-2">
+                <h6>Use Endpoint Detection & Response (EDR)</h6>
+                <p class="muted small mb-0">Implement EDR software to monitor system behavior, track unusual memory activity, and flag potentially malicious actions even when no files are involved.</p>
+              </div>
+              <div class="glass-card mb-2">
+                <h6>Regularly patch & update</h6>
+                <p class="muted small mb-0">Keep OS, browsers, and apps up to date; use centralized patch management to reduce exploitation windows.</p>
+              </div>
+              <div class="glass-card mb-2">
+                <h6>Restrict scripting engines</h6>
+                <p class="muted small mb-0">Limit PowerShell, VBScript, JScript, and other scripting tools to administrators; use AppLocker or Windows Defender Application Control (WDAC) to enforce policies and enable PowerShell logging and script-block transcription.</p>
+              </div>
+              <div class="glass-card mb-2">
+                <h6>Harden Office & disable macros</h6>
+                <p class="muted small mb-0">Disable macros by default and use Protected View; use application-level controls and train users to avoid enabling macros from unknown documents.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="glass-card mb-2">
+                <h6>Application whitelisting</h6>
+                <p class="muted small mb-0">Use AppLocker or WDAC to prevent unauthorized scripts and binaries from running, reducing the risk posed by living-off-the-land tactics.</p>
+              </div>
+              <div class="glass-card mb-2">
+                <h6>Network segmentation & egress filtering</h6>
+                <p class="muted small mb-0">Limit lateral movement and restrict outbound access from endpoints. Use proxying and DNS filtering to block known malicious domains.</p>
+              </div>
+              <div class="glass-card mb-2">
+                <h6>Registry & system monitoring</h6>
+                <p class="muted small mb-0">Monitor for suspicious registry changes, scheduled task creations, or unusual use of WMI and Task Scheduler that indicate persistence mechanisms.</p>
+              </div>
+              <div class="glass-card mb-2">
+                <h6>Controlled Folder Access & attack surface reduction</h6>
+                <p class="muted small mb-0">Enable Controlled Folder Access and ASR rules in Windows Defender (or equivalent) to limit unauthorized changes and reduce exploitable pathways.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <h4 class="section-title">Operational Measures</h4>
+            <div class="row">
+              <div class="col-md-6">
+                <ul class="muted">
+                  <li>Conduct regular security awareness training to reduce phishing and social engineering risk.</li>
+                  <li>Deploy honeypots or canary accounts to detect suspicious activity early.</li>
+                  <li>Perform regular memory forensics, endpoint audits, and EDR rule tuning.</li>
+                  <li>Use threat intelligence feeds to proactively block known malicious domains and IPs.</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <ul class="muted">
+                  <li>Prepare incident response playbooks specifically for memory-only compromises (memory dumps, containment steps, EDR artifact collection).</li>
+                  <li>Enforce least-privilege access and multi-factor authentication (MFA) to limit attacker reach if credentials are compromised.</li>
+                  <li>Harden browsers: disable legacy plugins, enforce content security policies, and limit script execution where possible.</li>
+                  <li>Disable unnecessary services and scripting engines to reduce attack surface.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-3 text-center">
+              <p class="fw-bold">Combine technical controls, monitoring, and user training for the best defense against fileless threats.</p>
+            </div>
+          </div>
+        </article>
+
+        <article id="resources" class="mb-4">
+          <h3 class="section-title">Further reading & references</h3>
+          <ul class="muted">
+            <li>MITRE ATT&CK — T1059 (Command and Scripting Interpreter), T1218 (Signed Binary Proxy Execution)</li>
+            <li>Vendor whitepapers on EDR and memory analysis</li>
+            <li>Security blogs and incident writeups for real-world examples</li>
+          </ul>
+        </article>
+
+      </main>
+
+      <aside class="col-lg-4">
+        <div class="p-3 glass-card mb-3 text-center">
+          <img src="img/filelessattack.png" alt="Sidebar placeholder" class="img-fluid rounded mb-2">
+          <h6 class="mb-1">Quick facts</h6>
+          <p class="muted small mb-0">Memory-resident threats · Behavioral detection recommended</p>
+        </div>
+
+        <div id= "types" class="p-3 glass-card mb-3">
+          <h6 class="mb-2">Types at a glance</h6>
+          <div class="d-flex flex-column gap-2">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-terminal-fill type-icon accent"></i>
+              <div>
+                <strong>PowerShell-based</strong>
+                <div class="muted small">Scripts executed in memory via PowerShell.</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-cpu-fill type-icon accent-2"></i>
+              <div>
+                <strong>WMI Exploits</strong>
+                <div class="muted small">Remote command execution using WMI.</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-box-seam type-icon" style="color:#ffd27a"></i>
+              <div>
+                <strong>LOTL / LOLBins</strong>
+                <div class="muted small">Using trusted system tools to carry out attacks.</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-file-earmark-text-fill type-icon" style="color:#bda1ff"></i>
+              <div>
+                <strong>Macro-based</strong>
+                <div class="muted small">Malicious macros in Office documents.</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-journal-medical type-icon" style="color:#a6ffb0"></i>
+              <div>
+                <strong>Registry persistence</strong>
+                <div class="muted small">Scripts or commands stored in the registry for persistence.</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-diagram-3 type-icon" style="color:#ffd6a5"></i>
+              <div>
+                <strong>Reflective DLL injection</strong>
+                <div class="muted small">DLL injected directly into process memory without disk writes.</div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-browser-chrome type-icon" style="color:#b3d4ff"></i>
+              <div>
+                <strong>Browser-based exploits</strong>
+                <div class="muted small">Malicious JavaScript or exploits running in-browser memory.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3 glass-card mb-3">
+          <h6 class="mb-2">Table of contents</h6>
+          <nav class="toc small">
+            <a href="#overview">Overview</a><br>
+            <a href="#how">How it works</a><br>
+            <a href="#detection">Detection</a><br>
+            <a href="#prevention">Prevention</a>
+          </nav>
+        </div>
+
+        <div class="p-3 glass-card mb-3 text-center">
+          <a class="btn btn-sm btn-outline-light" href="https://www.google.com/search?q=Fileless+Attack+prevention" target="_blank" rel="noopener">Search Google: Fileless Attack prevention</a>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="mt-5 text-center text-muted small">
+      <p class="mb-1">Created for educational purposes — do not run untrusted code. &copy; <span id="year"></span></p>
+      <p class="mb-0">Designed for clarity · Built with Bootstrap</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
